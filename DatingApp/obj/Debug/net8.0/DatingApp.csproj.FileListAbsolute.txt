@@ -125,3 +125,4 @@
 /Users/nico/Desktop/DatingApp/DatingApp/obj/Debug/net8.0/DatingApp.genruntimeconfig.cache
 /Users/nico/Desktop/DatingApp/DatingApp/obj/Debug/net8.0/ref/DatingApp.dll
 /Users/nico/Desktop/DatingApp/DatingApp/obj/Debug/net8.0/DatingApp.csproj.Up2Date
+/Users/nico/Desktop/DatingApp/DatingApp/obj/Debug/net8.0/DatingApp.sourcelink.json
