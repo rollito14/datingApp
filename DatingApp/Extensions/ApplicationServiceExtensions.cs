@@ -1,4 +1,5 @@
 using DatingApp.Data;
+using DatingApp.Interfaces;
 using DatingApp.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +16,7 @@ public static class ApplicationServiceExtensions
         });
         
         services.AddCors();
-        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<ItokenService, TokenService>();
         return services;
     }
 }   
