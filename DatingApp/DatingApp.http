@@ -1,6 +1,821 @@
-@DatingApp_HostAddress = http://localhost:5044
-
-GET {{DatingApp_HostAddress}}/weatherforecast/
-Accept: application/json
+# DatingApp
 
 ###
+# group: Section 2
+# @name Get WeatherForecast
+GET https://localhost:5001/api/weatherforecast
+
+###
+# group: Section 2
+# @name Get Users
+GET https://localhost:5001/api/users
+
+
+###
+# group: Section 2
+# @name Get User
+GET https://localhost:5001/api/users/1
+Authorization:  Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJqaW0iLCJuYmYiOjE3MTUzNTI0NDgsImV4cCI6MTcxNTk1NzI0OCwiaWF0IjoxNzE1MzUyNDQ4fQ.eSoKELxf6Jtbt9doupCra1zuo8zwS4SQWW06s4Qs2ZsXddjedZtp4XzvRx7rWz3R3TPuHJnK28hQ6myc7nsx2g
+
+###
+# group: Section 4
+# @name Register user
+POST {{url}}/api/account/register
+Content-Type: application/json
+
+{
+  "username": "bob",
+  "password": "password"
+}
+
+###
+# group: Section 4
+# @name Register user query string
+POST {{url}}/api/account/register?
+    username=sam&
+    password=password
+
+###
+# group: Section 4
+# @name Register user blank fields
+POST {{url}}/api/account/register
+Content-Type: application/json
+
+{
+  "username": "",
+  "password": ""
+}
+
+###
+# group: Section 4
+# @name Login as bob
+POST {{url}}/api/account/login
+Content-Type: application/json
+
+{
+  "username": "jim",
+  "password": "password"
+}
+
+###
+# group: Section 4
+# @name Get Users
+GET https://localhost:5001/api/users
+
+###
+# group: Section 4
+# @name Get User
+GET https://localhost:5001/api/users/1
+
+###
+# group: Section 4
+# @name Get User With Bearer token
+GET https://localhost:5001/api/users/1
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJib2IiLCJuYmYiOjE1OTYwMDQ0MjgsImV4cCI6MTU5NjYwOTIyOCwiaWF0IjoxNTk2MDA0NDI4fQ.ME7hXoP08puzMF8e0Fwf27mYbSV4LD8qL7bFeop1QwsdQWNoJGSF8XDZ0EsMFwfc4aMA78zXd8MydocEtKSP2w
+
+###
+# group: Section 7
+# @name Get Null Ref Error
+GET {{url}}/api/buggy/server-error
+
+###
+# group: Section 7
+# @name Get Auth Error
+GET {{url}}/api/buggy/auth
+
+###
+# group: Section 7
+# @name Get Not Found error
+GET {{url}}/api/buggy/not-found
+
+###
+# group: Section 7
+# @name Get Bad Request
+GET {{url}}/api/buggy/bad-request
+
+###
+# group: Section 7
+# @name Get Validation Error
+POST {{url}}/api/account/register
+Content-Type: application/json
+
+{}
+
+###
+# group: Section 8
+# @name Login as lisa and save token to env
+POST {{url}}/api/account/login
+Content-Type: application/json
+
+{
+  "username": "lisa",
+  "password": "Pa$$w0rd"
+}
+
+> {%
+    // TODO: migrate to HTTP Client Response handler API
+    // const user = pm.response.json();
+    //
+    // pm.test("Has properties", function () {
+    //     pm.expect(user).to.have.property('username');
+    //     pm.expect(user).to.have.property('token');
+    // });
+    //
+    // if (pm.test("Has properties")) {
+    //     pm.globals.set('token', user.token);
+    // }
+%}
+
+###
+# group: Section 8
+# @name Get Users
+GET https://localhost:5001/api/users
+Authorization: Bearer {{token}}
+
+###
+# group: Section 8
+# @name Get User by username
+GET https://localhost:5001/api/users/lisa
+Authorization: Bearer {{token}}
+
+###
+# group: Section 10
+# @name Login as lisa and save token to env
+POST {{url}}/api/account/login
+Content-Type: application/json
+
+{
+  "username": "lisa",
+  "password": "Pa$$w0rd"
+}
+
+> {%
+    // TODO: migrate to HTTP Client Response handler API
+    // const user = pm.response.json();
+    //
+    // pm.test("Has properties", function () {
+    //     pm.expect(user).to.have.property('username');
+    //     pm.expect(user).to.have.property('token');
+    // });
+    //
+    // if (pm.test("Has properties")) {
+    //     pm.globals.set('token', user.token);
+    // }
+%}
+
+###
+# group: Section 10
+# @name Update user
+PUT {{url}}/api/users
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "introduction": "Updated intro",
+  "lookingFor": "Updated lookingFor",
+  "interests": "Updated interests",
+  "city": "Updated city",
+  "country": "Updated country"
+}
+
+###
+# group: Section 11
+# @name Login as lisa and save token to env
+POST {{url}}/api/account/login
+Content-Type: application/json
+
+{
+  "username": "lisa",
+  "password": "Pa$$w0rd"
+}
+
+> {%
+    // TODO: migrate to HTTP Client Response handler API
+    // const user = pm.response.json();
+    //
+    // pm.test("Has properties", function () {
+    //     pm.expect(user).to.have.property('username');
+    //     pm.expect(user).to.have.property('token');
+    // });
+    //
+    // if (pm.test("Has properties")) {
+    //     pm.globals.set('token', user.token);
+    // }
+%}
+
+###
+# group: Section 11
+# @name Add photo for user
+POST {{url}}/api/users/add-photo
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="File"; filename="wonder3.jpg"
+
+< /Users/neil/Desktop/APIPhotos/wonder3.jpg
+--WebAppBoundary
+
+###
+# group: Section 11
+# @name Get User by username
+GET {{url}}/api/users/lisa
+Authorization: Bearer {{token}}
+
+###
+# group: Section 11
+# @name Set Main Photo
+PUT https://localhost:5001/api/users/set-main-photo/11
+Authorization: Bearer {{token}}
+
+###
+# group: Section 11
+# @name Delete Photo
+DELETE https://localhost:5001/api/users/delete-photo/11
+Authorization: Bearer {{token}}
+
+###
+# group: Section 12
+# @name Register User
+POST {{url}}/api/account/register
+Content-Type: application/json
+
+{
+  "gender": "male",
+  "username": "bob",
+  "knownAs": "Bob",
+  "dateOfBirth": "1985-01-23",
+  "city": "London",
+  "country": "UK",
+  "password": "Pa$$w0rd"
+}
+
+> {%
+    // TODO: migrate to HTTP Client Response handler API
+    // const user = pm.response.json();
+    //
+    // pm.test("Has properties", function () {
+    //     pm.expect(user).to.have.property('username');
+    //     pm.expect(user).to.have.property('token');
+    // });
+    //
+    // if (pm.test("Has properties")) {
+    //     pm.globals.set('token', user.token);
+    // }
+%}
+
+###
+# group: Section 12
+# @name Get User by username
+GET {{url}}/api/users/bob
+Authorization: Bearer {{token}}
+
+###
+# group: Section 13
+# @name Login as lisa and save token to env
+POST {{url}}/api/account/login
+Content-Type: application/json
+
+{
+  "username": "lisa",
+  "password": "Pa$$w0rd"
+}
+
+> {%
+    // TODO: migrate to HTTP Client Response handler API
+    // const user = pm.response.json();
+    //
+    // pm.test("Has properties", function () {
+    //     pm.expect(user).to.have.property('username');
+    //     pm.expect(user).to.have.property('token');
+    // });
+    //
+    // if (pm.test("Has properties")) {
+    //     pm.globals.set('token', user.token);
+    // }
+%}
+
+###
+# group: Section 13
+# @name Get Users No QS
+GET {{url}}/api/users
+Authorization: Bearer {{token}}
+
+###
+# group: Section 13
+# @name Get Users with pagination
+GET {{url}}/api/users?
+    pageNumber=1&
+    pageSize=5
+Authorization: Bearer {{token}}
+
+###
+# group: Section 13
+# @name Get Users with gender
+GET {{url}}/api/users?
+    gender=female
+Authorization: Bearer {{token}}
+
+###
+# group: Section 13
+# @name Get Users with minAge 25
+GET {{url}}/api/users?
+    minAge=25
+Authorization: Bearer {{token}}
+
+###
+# group: Section 13
+# @name Get Users with maxAge 40
+GET {{url}}/api/users?
+    maxAge=40
+Authorization: Bearer {{token}}
+
+###
+# group: Section 13
+# @name Get Users in 20s
+GET {{url}}/api/users?
+    minAge=20&
+    maxAge=29
+Authorization: Bearer {{token}}
+
+###
+# group: Section 13
+# @name Get Users orderedby Created
+GET {{url}}/api/users?
+    orderBy=created&
+    gender=female
+Authorization: Bearer {{token}}
+
+###
+# group: Section 13
+# @name Get Users orderedby lastActive
+GET {{url}}/api/users?
+    orderBy=lastActive&
+    gender=female
+Authorization: Bearer {{token}}
+
+###
+# group: Section 14
+# @name Login as lisa and save token to env
+POST {{url}}/api/account/login
+Content-Type: application/json
+
+{
+  "username": "lisa",
+  "password": "Pa$$w0rd"
+}
+
+> {%
+    // TODO: migrate to HTTP Client Response handler API
+    // const user = pm.response.json();
+    //
+    // pm.test("Has properties", function () {
+    //     pm.expect(user).to.have.property('username');
+    //     pm.expect(user).to.have.property('token');
+    // });
+    //
+    // if (pm.test("Has properties")) {
+    //     pm.globals.set('token', user.token);
+    // }
+%}
+
+###
+# group: Section 14
+# @name Add like for todd from lola
+POST {{url}}/api/likes/todd
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{}
+
+> {%
+    // TODO: you can add here Response handler
+%}
+
+###
+# group: Section 14
+# @name Get Liked Users
+GET {{url}}/api/likes?
+    predicate=liked
+Authorization: Bearer {{token}}
+
+###
+# group: Section 14
+# @name Get Liked Users Liked by
+GET {{url}}/api/likes?
+    predicate=likedBy
+Authorization: Bearer {{token}}
+
+###
+# group: Section 15
+# @name Login as lisa and save token to env
+POST {{url}}/api/account/login
+Content-Type: application/json
+
+{
+  "username": "lisa",
+  "password": "Pa$$w0rd"
+}
+
+> {%
+    // TODO: migrate to HTTP Client Response handler API
+    // const user = pm.response.json();
+    //
+    // pm.test("Has properties", function () {
+    //     pm.expect(user).to.have.property('username');
+    //     pm.expect(user).to.have.property('token');
+    // });
+    //
+    // if (pm.test("Has properties")) {
+    //     pm.globals.set('token', user.token);
+    // }
+%}
+
+###
+# group: Section 15
+# @name Create Message From Lisa to Todd
+POST {{url}}/api/messages
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "recipientUsername": "todd",
+  "content": "Test message 1 from Lisa to Todd"
+}
+
+###
+# group: Section 15
+# @name Login as Todd and save token to env
+POST {{url}}/api/account/login
+Content-Type: application/json
+
+{
+  "username": "todd",
+  "password": "Pa$$w0rd"
+}
+
+> {%
+    // TODO: migrate to HTTP Client Response handler API
+    // const user = pm.response.json();
+    //
+    // pm.test("Has properties", function () {
+    //     pm.expect(user).to.have.property('username');
+    //     pm.expect(user).to.have.property('todd_token');
+    // });
+    //
+    // if (pm.test("Has properties")) {
+    //     pm.globals.set('todd_token', user.token);
+    // }
+%}
+
+###
+# group: Section 15
+# @name Create Message From Todd to Lisa
+POST {{url}}/api/messages
+Authorization: Bearer {{todd_token}}
+Content-Type: application/json
+
+{
+  "recipientUsername": "lisa",
+  "content": "Test message from Todd to Lisa"
+}
+
+###
+# group: Section 15
+# @name Get Default Messages for Lisa
+GET {{url}}/api/messages
+Authorization: Bearer {{token}}
+
+###
+# group: Section 15
+# @name Get Default Messages for Todd
+GET {{url}}/api/messages
+Authorization: Bearer {{todd_token}}
+
+###
+# group: Section 15
+# @name Get Outbox Messages for Lisa
+GET {{url}}/api/messages?
+    container=Outbox
+Authorization: Bearer {{token}}
+
+###
+# group: Section 15
+# @name Get Outbox Messages for Todd
+GET {{url}}/api/messages?
+    container=Outbox
+Authorization: Bearer {{todd_token}}
+
+###
+# group: Section 15
+# @name Get Message thread Lisa and Todd
+GET {{url}}/api/messages/thread/todd
+Authorization: Bearer {{token}}
+
+###
+# group: Section 16
+# @name Login as lisa and save token to env
+POST {{url}}/api/account/login
+Content-Type: application/json
+
+{
+  "username": "lisa",
+  "password": "Pa$$w0rd"
+}
+
+> {%
+    // TODO: migrate to HTTP Client Response handler API
+    // const user = pm.response.json();
+    //
+    // pm.test("Has properties", function () {
+    //     pm.expect(user).to.have.property('username');
+    //     pm.expect(user).to.have.property('token');
+    // });
+    //
+    // if (pm.test("Has properties")) {
+    //     pm.globals.set('token', user.token);
+    // }
+%}
+
+###
+# group: Section 16
+# @name Register User Bob and save token to env
+POST https://localhost:5001/api/account/register
+Content-Type: application/json
+
+{
+  "gender": "male",
+  "username": "bob",
+  "knownAs": "Bob",
+  "dateOfBirth": "1985-01-23",
+  "city": "London",
+  "country": "UK",
+  "password": "Pa$$w0rd"
+}
+
+> {%
+    // TODO: migrate to HTTP Client Response handler API
+    // const user = pm.response.json();
+    //
+    // pm.test("Has properties", function () {
+    //     pm.expect(user).to.have.property('username');
+    //     pm.expect(user).to.have.property('token');
+    // });
+    //
+    // if (pm.test("Has properties")) {
+    //     pm.globals.set('bob_token', user.token);
+    // }
+%}
+
+###
+# group: Section 16
+# @name Login as admin and save token to env
+POST {{url}}/api/account/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "Pa$$w0rd"
+}
+
+> {%
+    // TODO: migrate to HTTP Client Response handler API
+    // const user = pm.response.json();
+    //
+    // pm.test("Has properties", function () {
+    //     pm.expect(user).to.have.property('username');
+    //     pm.expect(user).to.have.property('token');
+    // });
+    //
+    // if (pm.test("Has properties")) {
+    //     pm.globals.set('admin_token', user.token);
+    // }
+%}
+
+###
+# group: Section 16
+# @name Get Users as Lisa
+GET {{url}}/api/users
+Authorization: Bearer {{token}}
+
+###
+# group: Section 16
+# @name Get Users as Admin
+GET {{url}}/api/users
+Authorization: Bearer {{admin_token}}
+
+###
+# group: Section 16
+# @name Get User by username as Lisa
+GET {{url}}/api/users/lisa
+Authorization: Bearer {{token}}
+
+###
+# group: Section 16
+# @name Get User by username as Admin
+GET {{url}}/api/users/lisa
+Authorization: Bearer {{admin_token}}
+
+###
+# group: Section 16
+# @name Get Roles as admin
+GET {{url}}/api/admin/users-with-roles
+Authorization: Bearer {{admin_token}}
+
+###
+# group: Section 16
+# @name Get Roles as lisa
+GET {{url}}/api/admin/users-with-roles
+Authorization: Bearer {{token}}
+
+###
+# group: Section 16
+# @name Get Photos to moderate as admin
+GET {{url}}/api/admin/photos-to-moderate
+Authorization: Bearer {{admin_token}}
+
+###
+# group: Section 16
+# @name Get Photos to moderate as lisa
+GET {{url}}/api/admin/photos-to-moderate
+Authorization: Bearer {{token}}
+
+###
+# group: Section 16
+# @name Edit Roles for Lisa
+POST {{url}}/api/admin/edit-roles/lisa?
+    roles=Moderator,Member
+Authorization: Bearer {{admin_token}}
+
+###
+# group: Section 18
+# @name Login as lisa and save token to env
+POST {{url}}/api/account/login
+Content-Type: application/json
+
+{
+  "username": "lisa",
+  "password": "Pa$$w0rd"
+}
+
+> {%
+    // TODO: migrate to HTTP Client Response handler API
+    // const user = pm.response.json();
+    //
+    // pm.test("Has properties", function () {
+    //     pm.expect(user).to.have.property('username');
+    //     pm.expect(user).to.have.property('token');
+    // });
+    //
+    // if (pm.test("Has properties")) {
+    //     pm.globals.set('token', user.token);
+    // }
+%}
+
+###
+# group: Section 18
+# @name Login as todd and save token to env
+POST {{url}}/api/account/login
+Content-Type: application/json
+
+{
+  "username": "todd",
+  "password": "Pa$$w0rd"
+}
+
+> {%
+    // TODO: migrate to HTTP Client Response handler API
+    // const user = pm.response.json();
+    //
+    // pm.test("Has properties", function () {
+    //     pm.expect(user).to.have.property('username');
+    //     pm.expect(user).to.have.property('token');
+    // });
+    //
+    // if (pm.test("Has properties")) {
+    //     pm.globals.set('todd_token', user.token);
+    // }
+%}
+
+###
+# group: Section 18
+# @name Login as admin and save token to env Copy
+POST {{url}}/api/account/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "Pa$$w0rd"
+}
+
+> {%
+    // TODO: migrate to HTTP Client Response handler API
+    // const user = pm.response.json();
+    //
+    // pm.test("Has properties", function () {
+    //     pm.expect(user).to.have.property('username');
+    //     pm.expect(user).to.have.property('token');
+    // });
+    //
+    // if (pm.test("Has properties")) {
+    //     pm.globals.set('admin_token', user.token);
+    // }
+%}
+
+###
+# group: Section 18
+# @name Add photo for user (add 2 photos here)
+POST {{url}}/api/users/add-photo
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="File"; filename="wonder2.jpg"
+
+< /Users/neil/Desktop/APIPhotos/wonder2.jpg
+--WebAppBoundary
+
+###
+# group: Section 18
+# @name Get Photos to moderate as admin
+GET {{url}}/api/admin/photos-to-moderate
+Authorization: Bearer {{admin_token}}
+
+###
+# group: Section 18
+# @name Get User by username as lisa (get own profile - should see unapproved photo)
+GET {{url}}/api/users/lisa
+Authorization: Bearer {{token}}
+
+###
+# group: Section 18
+# @name Get User by username as todd (get lisas profile - should not see unapproved photo)
+GET {{url}}/api/users/lisa
+Authorization: Bearer {{todd_token}}
+
+###
+# group: Section 18
+# @name Approve photo (need to add the id of added photo)
+POST {{url}}/api/admin/approve-photo/11
+Authorization: Bearer {{admin_token}}
+
+###
+# group: Section 18
+# @name Reject photo (need to add the id of added photo)
+POST {{url}}/api/admin/reject-photo/12
+Authorization: Bearer {{admin_token}}
+
+###
+# group: Section 18
+# @name Register User Bob and save token as bob_token
+POST {{url}}/api/account/register
+Content-Type: application/json
+
+{
+  "gender": "male",
+  "username": "bob",
+  "knownAs": "Bob",
+  "dateOfBirth": "1985-01-23",
+  "city": "London",
+  "country": "UK",
+  "password": "Pa$$w0rd"
+}
+
+> {%
+    // TODO: migrate to HTTP Client Response handler API
+    // const user = pm.response.json();
+    //
+    // pm.test("Has properties", function () {
+    //     pm.expect(user).to.have.property('username');
+    //     pm.expect(user).to.have.property('token');
+    // });
+    //
+    // if (pm.test("Has properties")) {
+    //     pm.globals.set('bob_token', user.token);
+    // }
+%}
+
+###
+# group: Section 18
+# @name Add photo for bob (add 2 photos) - should both be in unapproved state
+POST {{url}}/api/users/add-photo
+Authorization: Bearer {{bob_token}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="File"; filename="bat2.jpg"
+
+< /Users/neil/Desktop/APIPhotos/bat2.jpg
+--WebAppBoundary
+
+###
+# group: Section 18
+# @name Approve photo for bob  (need to add the id of unapproved photo) - ensure it gets set as the main photo
+POST {{url}}/api/admin/approve-photo/13
+Authorization: Bearer {{admin_token}}
+
+###
+# group: Section 18
+# @name Get User by username as bob - should see approved photo set to main
+GET {{url}}/api/users/bob
+Authorization: Bearer {{bob_token}}
