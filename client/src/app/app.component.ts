@@ -14,7 +14,6 @@ import { HomeComponent } from './home/home.component';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
-  title = 'Dating App';
   users: any = [];
 
   constructor(private accountService: AccountService) {}
@@ -29,6 +28,6 @@ export class AppComponent implements OnInit {
       return;
     }
     const user: User = JSON.parse(userString);
-    this.accountService.setCurrentUser(user);
+    this.accountService.currentUser.set(user);
   }
 }
